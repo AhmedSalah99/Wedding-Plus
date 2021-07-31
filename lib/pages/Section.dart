@@ -12,6 +12,13 @@ class _CatagoresState extends State<Section> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.redAccent[400],
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.drag_indicator_sharp),
+              onPressed: () {
+                Navigator.of(context).pushNamed('add');
+              })
+        ],
         title: Text("Section"),
         centerTitle: true,
       ),

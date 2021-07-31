@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:newproject/compunt/Setting.dart';
+import 'package:newproject/compunt/about.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'contact.dart';
+
 class Mydrawer extends StatefulWidget {
-  Mydrawer([Key key]) : super(key: key);
   @override
   _MydrawerState createState() => _MydrawerState();
 }
@@ -10,7 +13,9 @@ class Mydrawer extends StatefulWidget {
 class _MydrawerState extends State<Mydrawer> {
   var username;
   var email;
+
   bool isSignin = false;
+
   getpref() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
 
@@ -21,6 +26,7 @@ class _MydrawerState extends State<Mydrawer> {
       setState(() {
         username = preferences.getString('username');
         email = preferences.getString('email');
+
         isSignin = true;
       });
     }
@@ -29,6 +35,7 @@ class _MydrawerState extends State<Mydrawer> {
   @override
   void initState() {
     getpref();
+
     super.initState();
   }
 
@@ -76,7 +83,7 @@ class _MydrawerState extends State<Mydrawer> {
           ),
           ListTile(
             title: Text("Sections"),
-            leading: Icon(Icons.view_headline),
+            leading: Icon(Icons.category_rounded),
             onTap: () {
               Navigator.of(context).pushNamed('categores');
             },
@@ -84,7 +91,10 @@ class _MydrawerState extends State<Mydrawer> {
           ListTile(
             title: Text("Setting"),
             leading: Icon(Icons.settings),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Setting()));
+            },
           ),
           isSignin
               ? ListTile(
@@ -95,7 +105,7 @@ class _MydrawerState extends State<Mydrawer> {
                         await SharedPreferences.getInstance();
                     preferences.remove("username");
                     preferences.remove("email");
-                    Navigator.of(context).pushNamed("login");
+                    Navigator.of(context).pushNamed("tips");
                   },
                 )
               : ListTile(
@@ -109,6 +119,14 @@ class _MydrawerState extends State<Mydrawer> {
             title: Text("About"),
             leading: Icon(Icons.info),
             onTap: () {},
+          ),
+          ListTile(
+            title: Text("Contact With Us"),
+            leading: Icon(Icons.info),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Contact()));
+            },
           ),
         ],
       ),

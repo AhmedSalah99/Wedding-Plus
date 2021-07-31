@@ -1,19 +1,20 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:newproject/compunt/drawer.dart';
 import 'package:newproject/compunt/listPackage.dart';
+import 'package:http/http.dart' as http;
+import 'package:newproject/compunt/listmakup.dart';
 
-class Makeup extends StatefulWidget {
+class Makup extends StatefulWidget {
   @override
   _CatagoresState createState() => _CatagoresState();
 }
 
-class _CatagoresState extends State<Makeup> {
+class _CatagoresState extends State<Makup> {
   Future getData() async {
-    var url = "http://192.168.1.6/wedding/index.php";
-    var data = {"sec": "1"};
-    var response = await http.post(url, body: data);
+    var url = "http://192.168.145.252/wedding/makup.php";
+
+    var response = await http.post(url);
     var responsebody = jsonDecode(response.body);
     return responsebody;
   }
@@ -23,7 +24,7 @@ class _CatagoresState extends State<Makeup> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.redAccent[400],
-        title: Text("MakeUp"),
+        title: Text("Makup"),
         centerTitle: true,
       ),
       drawer: Mydrawer(),
@@ -41,14 +42,15 @@ class _CatagoresState extends State<Makeup> {
                 return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, i) {
-                    return listPackage(
+                    return listPackagemakup(
                       name: snapshot.data[i]['name'],
                       space: snapshot.data[i]['space'],
                       price: snapshot.data[i]['price'],
+                      priceDetalis: snapshot.data[i]['priceDetalis'],
                       location: snapshot.data[i]['location'],
                       phone: snapshot.data[i]['phone'],
                       capacity: snapshot.data[i]['capacity'],
-                      hell_sec: snapshot.data[i]['hell_sec'],
+                      image_post: snapshot.data[i]['image_post'],
                     );
                   },
                 );

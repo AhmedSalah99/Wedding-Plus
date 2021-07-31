@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 class Homepage extends State<Home> {
   List<dynamic> listsearch = [];
   Future getData() async {
-    var url = "http://192.168.1.6/wedding/search.php";
+    var url = "http://192.168.145.252/wedding/search.php";
     var response = await http.get(url);
     var responsebody = jsonDecode(response.body);
     for (int i = 0; i < responsebody.length; i++) {
@@ -217,10 +217,13 @@ class Homepage extends State<Home> {
                         padding: EdgeInsets.all(10),
                         child: InkWell(
                           child: GridTile(
-                            child: Image.asset("images/waths.jpeg"),
-                            footer: cGradTile("الاماسه بالاس"),
+                            child: Image.asset(
+                                "images/Hells/Borivage/Borivage.jpg"),
+                            footer: cGradTile("Borivage"),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed("Halls");
+                          },
                         ),
                       ),
                       Container(
@@ -228,39 +231,49 @@ class Homepage extends State<Home> {
                         child: InkWell(
                           child: GridTile(
                             child: Image.asset("images/waths.jpeg"),
-                            footer: cGradTile("الاماسه بالاس"),
+                            footer: cGradTile("Al Masa"),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed("Halls");
+                          },
                         ),
                       ),
                       Container(
                         padding: EdgeInsets.all(10),
                         child: InkWell(
                           child: GridTile(
-                            child: Image.asset("images/waths.jpeg"),
-                            footer: cGradTile("الاماسه بالاس"),
+                            child:
+                                Image.asset("images/Hells/marbila/marbila.jpg"),
+                            footer: cGradTile("Marbila"),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed("Halls");
+                          },
                         ),
                       ),
                       Container(
                         padding: EdgeInsets.all(10),
                         child: InkWell(
                           child: GridTile(
-                            child: Image.asset("images/waths.jpeg"),
-                            footer: cGradTile("الاماسه بالاس"),
+                            child: Image.asset(
+                                "images/Hells/Porto Laguna/portolagona.jpg"),
+                            footer: cGradTile("Porto"),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed("Halls");
+                          },
                         ),
                       ),
                       Container(
                         padding: EdgeInsets.all(10),
                         child: InkWell(
                           child: GridTile(
-                            child: Image.asset("images/waths.jpeg"),
-                            footer: cGradTile("الاماسه بالاس"),
+                            child: Image.asset("images/Hells/Reval/reval.jpg"),
+                            footer: cGradTile(" Reval"),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed("Halls");
+                          },
                         ),
                       ),
                     ],
@@ -286,8 +299,9 @@ class Datasearch extends SearchDelegate<String> {
   List<dynamic> list;
   Datasearch({this.list});
   Future getsearchdata() async {
-    var url = "http://192.168.1.5/wedding/searchhell.php";
+    var url = "http://192.168.145.252/wedding/searchhell.php";
     var data = {"searchhells": query};
+
     var response = await http.post(url, body: data);
     var responsebody = jsonDecode(response.body);
     return responsebody;
@@ -339,7 +353,6 @@ class Datasearch extends SearchDelegate<String> {
                   phone: snapshot.data[i]['phone'],
                   image: snapshot.data[i]["image"],
                   capacity: snapshot.data[i]['capacity'],
-                  hell_sec: snapshot.data[i]['hell_sec'],
                 );
               });
         } else

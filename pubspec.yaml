@@ -23,6 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  splashscreen: ^1.3.5
+  page_indicator: ^0.4.1
+  
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -32,8 +36,18 @@ dependencies:
   carousel_pro: ^1.0.0
   http: ^0.12.2
   shared_preferences: ^0.5.12+4
+  advance_pdf_viewer: ^1.2.2
+  toast:
+  image_picker:
+
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "images/catagory/log00o.png"
 
 dev_dependencies:
+  flutter_launcher_icons:
   flutter_test:
     sdk: flutter
 
@@ -58,9 +72,17 @@ flutter:
    - images/pexels-fu-zhichao-587741.jpg
    - images/pexels-studio-negarin-2613461.jpg
    - images/download.png
-   - images/makeup.png
-   - images/palace.png
+   - images/catagory/26389397.jpg
+   - images/catagory/32705782.jpg
+   - images/catagory/35429538.jpg
+   - images/catagory/35126698.jpg
+   - images/catagory/32581964.jpg
+   - images/catagory/cover_1.jpg
+   - images/catagory/log00o.png
+   - images/catagory/pexels-soulseeker-1589820.jpg
+   - images/catagory/pexels-studio-negarin-3650423.jpg
    - images/car(1).png
+   - images/im.png
    - images/majeup.png
    - images/palac.png
    - images/waths.jpeg

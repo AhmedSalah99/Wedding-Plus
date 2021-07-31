@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:newproject/pages/Orabypage.dart';
+import 'package:newproject/pages/OrabyDetails.dart';
 
 class listPackage extends StatelessWidget {
   final name;
@@ -14,17 +14,19 @@ class listPackage extends StatelessWidget {
   final phone;
   final hell_sec;
 
-  listPackage(
-      {this.name,
-      this.space,
-      this.price,
-      this.priceDetalis,
-      this.location,
-      this.nave,
-      this.capacity,
-      this.phone,
-      this.hell_sec,
-      this.image});
+  listPackage({
+    this.name,
+    this.space,
+    this.price,
+    this.priceDetalis,
+    this.location,
+    this.nave,
+    this.capacity,
+    this.phone,
+    this.hell_sec,
+    this.image,
+    image_post,
+  });
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -112,7 +114,6 @@ class listPackage extends StatelessWidget {
             price_d: price,
             priceDetalis_d: priceDetalis,
             location_d: location,
-            hell_sec_d: hell_sec,
             capacity_d: capacity,
             phone_d: phone,
             image_d: image,

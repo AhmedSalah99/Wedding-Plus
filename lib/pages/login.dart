@@ -2,6 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:newproject/admin/Dashboard.dart';
+import 'package:newproject/pages/Forgetpassword.dart';
+import 'package:newproject/pages/Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
@@ -15,7 +18,7 @@ showloading(context) {
       builder: (context) {
         return AlertDialog(
             content: Row(
-          children: <Widget>[Text("loding.."), CircularProgressIndicator()],
+          children: <Widget>[Text("looding.."), CircularProgressIndicator()],
         ));
       });
 }
@@ -102,13 +105,18 @@ class _LoginState extends State<Login> {
 
       showloading(context);
       var data = {"email": email.text, "password": password.text};
-      var url = "http://192.168.1.6/wedding/login.php";
+      var url = "http://192.168.145.252/wedding/login.php";
       var respons = await http.post(url, body: data);
       var responsbody = jsonDecode(respons.body);
       if (responsbody['status'] == "success") {
+        if (responsbody['statuse'] == "Admin") {
+          Navigator.of(context).pushNamed("dash");
+        } else {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Home()));
+        }
         savepref(responsbody['username'], responsbody['email']);
         print(responsbody['username']);
-        Navigator.of(context).pushNamed("home");
       } else {
         print("email or password is rowwing");
         Navigator.of(context).pop();
@@ -130,10 +138,17 @@ class _LoginState extends State<Login> {
         'username': username.text,
       };
 
-      var url = "http://192.168.1.6/wedding/signup.php";
+      var url = "http://192.168.145.252/wedding/signup.php";
       var response = await http.post(url, body: data);
       var responsebody = jsonDecode(response.body);
       if (responsebody['status'] == 'success') {
+        if (responsebody['statuse'] == "Admin") {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Dashboard()));
+        } else {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Home()));
+        }
         print("yes");
         Navigator.of(context).pushNamed("home");
       } else {
@@ -169,21 +184,24 @@ class _LoginState extends State<Login> {
       ),
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            colors: [Colors.redAccent, Colors.cyan[200], Colors.cyan[400]]),
+        image: DecorationImage(
+            image: AssetImage("images/catagory/pexels-soulseeker-1589820.jpg"),
+            fit: BoxFit.cover),
       ),
       child: ListView(
         children: <Widget>[
           Container(
-              padding: EdgeInsets.only(bottom: 50),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    showsignin ? "SignIn" : "SignUp",
-                    style: TextStyle(color: Colors.white, fontSize: 50),
-                  )
-                ],
+              padding: EdgeInsets.only(bottom: 0),
+              child: Container(
+                padding: EdgeInsets.only(right: 0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      showsignin ? "Sign In" : "Sign Up",
+                      style: TextStyle(color: Colors.redAccent, fontSize: 50),
+                    )
+                  ],
+                ),
               )),
           showsignin
               ? AnimatedContainer(
@@ -191,8 +209,8 @@ class _LoginState extends State<Login> {
                   curve: Curves.easeInOutBack,
                   height: 430,
                   decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.4),
-                      borderRadius: BorderRadius.circular(10)),
+                      color: Colors.redAccent.withOpacity(.1),
+                      borderRadius: BorderRadius.circular(60)),
                   padding:
                       EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
                   child: Form(
@@ -208,8 +226,11 @@ class _LoginState extends State<Login> {
                               decoration: InputDecoration(
                                   labelText: "Email ",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  prefixIcon: Icon(Icons.person)),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  prefixIcon: Icon(
+                                    Icons.person,
+                                    color: Colors.redAccent,
+                                  )),
                             ),
                           ),
                           Container(
@@ -223,8 +244,11 @@ class _LoginState extends State<Login> {
                               decoration: InputDecoration(
                                   labelText: "passowrd",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  prefixIcon: Icon(Icons.lock)),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Colors.redAccent,
+                                  )),
                             ),
                           ),
                           Container(
@@ -232,7 +256,13 @@ class _LoginState extends State<Login> {
                             child: Column(
                               children: <Widget>[
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Forgetpass()));
+                                  },
                                   child: Row(
                                     children: <Widget>[
                                       Center(
@@ -248,11 +278,12 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.only(top: 30, right: 10),
+                            padding: EdgeInsets.only(top: 20),
                             child: Center(
                               child: RaisedButton(
                                   child: Text(
                                     "Login",
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   color: Colors.redAccent,
                                   onPressed: showsignin ? signin : signup),
@@ -293,8 +324,8 @@ class _LoginState extends State<Login> {
                   curve: Curves.easeInOutBack,
                   height: 500,
                   decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.4),
-                      borderRadius: BorderRadius.circular(10)),
+                      color: Colors.redAccent.withOpacity(.1),
+                      borderRadius: BorderRadius.circular(60)),
                   padding:
                       EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
                   child: ListView(
@@ -314,8 +345,11 @@ class _LoginState extends State<Login> {
                                         labelText: "User name",
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(30)),
-                                        prefixIcon: Icon(Icons.person)),
+                                                BorderRadius.circular(20)),
+                                        prefixIcon: Icon(
+                                          Icons.person,
+                                          color: Colors.redAccent,
+                                        )),
                                   ),
                                 ),
                                 Container(
@@ -329,8 +363,11 @@ class _LoginState extends State<Login> {
                                         labelText: "Email",
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(30)),
-                                        prefixIcon: Icon(Icons.email)),
+                                                BorderRadius.circular(20)),
+                                        prefixIcon: Icon(
+                                          Icons.email,
+                                          color: Colors.redAccent,
+                                        )),
                                   ),
                                 ),
                                 Container(
@@ -345,8 +382,11 @@ class _LoginState extends State<Login> {
                                         labelText: "passowrd",
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(30)),
-                                        prefixIcon: Icon(Icons.lock)),
+                                                BorderRadius.circular(20)),
+                                        prefixIcon: Icon(
+                                          Icons.lock,
+                                          color: Colors.redAccent,
+                                        )),
                                   ),
                                 ),
                                 Container(
@@ -361,8 +401,11 @@ class _LoginState extends State<Login> {
                                         labelText: "Confirm password",
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(30)),
-                                        prefixIcon: Icon(Icons.lock)),
+                                                BorderRadius.circular(20)),
+                                        prefixIcon: Icon(
+                                          Icons.lock,
+                                          color: Colors.redAccent,
+                                        )),
                                   ),
                                 ),
                                 Container(
@@ -371,6 +414,7 @@ class _LoginState extends State<Login> {
                                     child: RaisedButton(
                                         child: Text(
                                           "Create account",
+                                          style: TextStyle(color: Colors.white),
                                         ),
                                         color: Colors.redAccent,
                                         onPressed: signup),
@@ -386,7 +430,7 @@ class _LoginState extends State<Login> {
                                       TextSpan(
                                         text: showsignin
                                             ? "if you dont have account you can"
-                                            : "if you  have account you can",
+                                            : "Already an acounte ?",
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w700),
@@ -395,7 +439,7 @@ class _LoginState extends State<Login> {
                                           recognizer: _changesigin,
                                           text: showsignin
                                               ? " create one from her"
-                                              : " Sign in from her",
+                                              : " login",
                                           style: TextStyle(
                                               color: Colors.blue,
                                               fontWeight: FontWeight.w700))
